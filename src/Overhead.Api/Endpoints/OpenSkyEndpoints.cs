@@ -1,3 +1,4 @@
+using Overhead.Api.Models;
 using Overhead.Api.Services;
 
 namespace Overhead.Api.Endpoints;
@@ -12,6 +13,12 @@ public static class OpenSkyEndpoints
         {
             var plane = await client.GetPlaneAsync(icao24, ct);
             return plane;
+        });
+
+        group.MapGet("/", async ([AsParameters] OpenSkyAreaRequest request, OpenSkyClient client, CancellationToken ct) =>
+        {
+            var planes = await client.GetPlanesInArea(request, ct);
+            return TypedResults.Ok(planes);
         });
     }
 }
