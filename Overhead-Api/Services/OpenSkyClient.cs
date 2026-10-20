@@ -59,6 +59,4 @@ public class OpenSkyClient(HttpClient http)
             MaxLong: Math.Min(lon + lonDelta, 180)
         );
     }
-
-
 }
