@@ -38,6 +38,7 @@ public class OpenSkyClient(HttpClient http)
         Longitude = GetDouble(s[5]),
         Latitude = GetDouble(s[6]),
         BaroAltitude = GetDouble(s[7]),
+        Heading = GetDouble(s[10]),
         OnGround = s[8].GetBoolean()
     };
 

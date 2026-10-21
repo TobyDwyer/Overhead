@@ -11,6 +11,7 @@ public record OpenSkyState
     public double? Longitude { get; init; }
     public double? Latitude { get; init; }
     public double? BaroAltitude { get; init; }
+    public double? Heading { get; init; }
     public bool OnGround { get; init; }
 }
 
