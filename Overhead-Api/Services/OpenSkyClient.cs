@@ -29,6 +29,21 @@ public class OpenSkyClient(HttpClient http)
         return response?.States?.Select(MapResults).ToList() ?? [];
     }
 
+    public async Task<List<OpenSkyState>> GetPlanesInAir(OpenSkyAreaRequest request, CancellationToken ct = default)
+    {
+        var box = GetAreaBox(request.Lat, request.Long, request.Area);
+        // Used to standardise to a . decimal
+        var inv = CultureInfo.InvariantCulture;
+
+        // F4 is used to format to 4 decimal points.
+        var url = "states/all" + $"?lamin={box.MinLat.ToString("F4", inv)}" + $"&lomin={box.MinLong.ToString("F4", inv)}" + $"&lamax={box.MaxLat.ToString("F4", inv)}" + $"&lomax={box.MaxLong.ToString("F4", inv)}";
+
+        var response = await http.GetFromJsonAsync<OpenSkyStatesResponse>(url, ct);
+
+
+        return response?.States?.Select(MapResults).Where(x => x.OnGround == false).ToList() ?? [];
+    }
+
 
     private static OpenSkyState MapResults(List<JsonElement> s) => new()
     {

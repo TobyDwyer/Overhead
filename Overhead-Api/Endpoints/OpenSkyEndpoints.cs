@@ -20,5 +20,11 @@ public static class OpenSkyEndpoints
             var planes = await client.GetPlanesInArea(request, ct);
             return TypedResults.Ok(planes);
         });
+
+        group.MapGet("/inair", async ([AsParameters] OpenSkyAreaRequest request, OpenSkyClient client, CancellationToken ct) =>
+        {
+            var planes = await client.GetPlanesInAir(request, ct);
+            return TypedResults.Ok(planes);
+        });
     }
 }
